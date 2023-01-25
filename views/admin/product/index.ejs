@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list produk</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.unpkg.com/bulma@0.9.3/css/bulma.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="/images/logo_tix_icon.ico" type="image/x-icon">
+    <style>
+        ::-webkit-scrollbar{
+            background-color: #ffffff;
+            width: 3px;
+            height: 3px;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: #001A3A;
+            width: 6px;
+            height: 6px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar is-dark" role="navigation" aria-label="main navigation" style="background-color: #001A3A;">
+            <div class="navbar-start">
+                <img src="/images/logo_tix_png.png" class="navbar-brand" alt="" width="50">
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </a>
+                  <div class="navbar-menu">
+                    <div class="navbar-start">
+                      <a href="/" class="navbar-item">Tix Online</a>
+                      <a href="#" class="navbar-item">Carrers</a>
+                      <a href="#" class="navbar-item">Product Dashboard</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="mx-3">
+                            <%= user.email %>
+                        </div>
+                        <div class="buttons">
+                            <%- (!user?'<a href="/user/login" class="button is-light">Login</a>':'<a href="/user/logout" class="button is-light">Logout</a>') %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div id="app" class="container is-max-desktop">
+        <h1 class="title mt-5">List of Ticket</h1>
+        <div>
+            <a href="/admin/product/create" class="button is-success">Tambahkan tiket</a>
+            <table class="table is-striped is-bordered mt-3 is-fullwidth" style="margin:10px auto;">
+                <thead>
+                    <tr>
+                        <th>Gambaran Tiket</th>
+                        <th>Nama tiket</th>
+                        <th>Harga tiket</th>
+                        <th class="has-text-centered">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(el=> { %>
+                        <tr>
+                            <td><img src="<%= el.images %>" alt="None" width="150"></td>
+                            <td><%= el.name %></td>
+                            <td><%= el.price %></td>
+                            <td class="has-text-centered">
+                                <a href="/admin/product/edit/<%= el.id %>" class="button is-warning is-small">Edit</a>
+                                <button onclick=<%='del(' +el.id+ ')' %> class="button is-danger is-small" style="margin-left: 5px;">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://bulmajs.tomerbe.co.uk/assets/bulmajs/0.10/dist/bulma.js"></script>
+    <script>
+        let del = (id) => {
+            axios.delete('/admin/product/api/product/' + id).then((result) => {
+                alert('Info Status: ' + result.status)
+                location.reload();
+            }).catch((err) => {
+                alert('error ' + err)
+            });
+        }
+    </script>
+</body>
+</html>
