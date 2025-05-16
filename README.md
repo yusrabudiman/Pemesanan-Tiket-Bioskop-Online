@@ -1,6 +1,6 @@
 # Pemesanan Tiket Bioskop Online
 
-## Team Group Heaven Crew
+## Team Heaven Crew
  
 ### Yusra Budiman Hasibuan (211110993) 
 ### David Bate'e ([211111930](https://github.com/DavidBatee))
